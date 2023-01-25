@@ -147,11 +147,11 @@ This boxplot looks very similar to the boxplot of salary by age, perhaps due to 
 cor(df$Expense, df$Age)
 ```
 
-Expense and age are not very strongly correlated. They have a somewhat weak, positive correlation
+Expense and age have a somewhat weak, positive correlation, similar to salary and age
 
 ## Scatterplot Matrix of Age, Salary, and Expense
 ```{r}
 plot(df[3:5], col="darkslategray2", main = "Scatterplot Matrix of Data", pch=19)
 ```
 
-It's clear from the scatterplot matrix that expense and salary are very closely correlated, while age is not very strongly correlated with either salary or expense
+It's clear from the scatterplot matrix that expense and salary are very closely correlated, while age is not very strongly correlated with either salary or expense. All the relationships are positive
