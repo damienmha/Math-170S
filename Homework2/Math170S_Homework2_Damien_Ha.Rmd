@@ -1,0 +1,157 @@
+---
+title: 'Math 170S Homework #2: Exploratory Data Analysis'
+author: "Damien Ha"
+date: "2023-01-25"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+# Loading Data and Packages
+```{r}
+suppressWarnings(library(ggplot2))
+df <- read.csv("HW2data.csv")
+head(df)
+tail(df)
+```
+
+Here is a function for calculating the mode
+
+```{r}
+getmode <- function(v) {
+    uniqv <- unique(v)
+    uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+```
+
+# Univariate Analysis
+
+## Sex
+```{r}
+pie(table(df$Sex), main = "Sex of Indidividuals in Data")
+```
+
+There is a near even split between male and female in this data, but with slightly more male
+
+## Age
+```{r}
+summary(df$Age)
+getmode(df$Age)
+```
+
+So the mean age is 24.51, the median age is 24, and the mode/most common age is also 24.
+
+```{r}
+hist(df$Age, xlab = "Age", main = "Histogram of Ages", col = "deepskyblue")
+```
+
+Age looks to be distributed fairly normally
+
+```{r}
+barplot(table(df$Age), xlab = "Age", ylab = "Number of People", main = "Bar Plot of Ages", col = "darkviolet")
+pie(table(df$Age), main = "Pie Chart of Ages")
+boxplot(df$Age, col="indianred2", plot=T, horizontal=T, main="Boxplot of Age")
+```
+There are fewer people at the oldest and youngest ends of the spectrum, i.e. fewer 16 and 17 year olds and 32 or 33 year olds than people in their 20s
+
+```{r}
+boxplot(df$Age ~ df$Sex, col=c("deeppink","blue"), xlab="Sex", ylab="Age", main="Boxplot of Age by Sex")
+```
+
+There seem to be more older female indidviduals in the data compared to males
+
+## Salary
+```{r}
+summary(df$Salary)
+getmode(df$Salary)
+```
+
+So the average salary is 3472, the median salary is 3447, and the most common salary is 2311. There is a large jump from the mode to the mean and median; larger values/possible outliers may have some influence on the mean. We can see that the max value is much higher than the 3rd quartile
+
+```{r}
+hist(df$Salary, xlab = "Salary", main = "Histogram of Salaries", col = "darkgreen")
+```
+
+Salary looks slightly right skewed, which supports what we saw in our previous observation.
+
+```{r}
+boxplot(df$Salary, col="darkorchid4", plot=T, horizontal=T, main="Boxplot of Salary Values")
+```
+
+Now let's look at this by sex
+
+```{r}
+boxplot(df$Salary ~ df$Sex, col=c("deeppink","blue"), xlab="Sex", ylab="Salary", main="Boxplot of Salary Values by Sex")
+```
+
+Males in this data have a wider range of salary than females
+
+## Expense
+```{r}
+summary(df$Expense)
+getmode(df$Expense)
+```
+
+So the mean is 1559, the median is 1548, and the mode is 1351. Again, large expense values may be increasing the mean
+
+```{r}
+hist(df$Expense, xlab = "Expense", main = "Histogram of Expense Values", col="darkgoldenrod1")
+```
+
+Expense is not right skewed like salary, but the larger values around 2000 do seem to lie a bit more outside the rest of the data
+
+```{r}
+qqnorm(df$Expense, pch = 19, frame = FALSE)
+qqline(df$Expense, col = "steelblue", lwd = 2)
+```
+
+From the qqplot, expense is fairly normally distributed. The points on the plot seem to fall on a fairly straight line and don't seem to have some other pattern that would imply skewedness
+
+```{r}
+boxplot(df$Expense, col="dodgerblue", plot=T, horizontal=T, main="Boxplot of Expense Values")
+boxplot(df$Expense ~ df$Sex, col=c("deeppink","blue"), xlab="Expense", ylab="Salary", main="Boxplot of Expense Values by Sex")
+```
+
+Males in this data also have a wider range of expenses than females
+
+# Bivariate/Multivariate Analysis
+
+## Expense vs Salary
+```{r}
+ggplot(df, aes(x=Expense, y=Salary)) + geom_point(colour="darkorange") + stat_smooth(method = "lm", col = "darkturquoise", se=F, size = 1) + labs(title = "Expense vs Salary") + theme(legend.position = "none")
+ggplot(df, aes(x=Expense, y=Salary)) + geom_point(aes(color = factor(Age))) + labs(colour = "Age", title = "Expense vs Salary")
+cor(df$Expense, df$Salary)
+```
+
+Expense and salary appear to be very strongly correlated, as evidenced by the correlation coefficient and the near perfect linear relationship seen in the scatterplot
+
+## Salary vs Age
+```{r}
+ggplot(df, aes(x=Age, y=Salary)) + geom_point(aes(color = factor(Sex))) + stat_smooth(method = "lm", col = "green", se = FALSE, size = 1) + labs(color = "Sex", title = "Salary vs Age")
+boxplot(Salary~Age,data=df, main="Salary Data by Age", xlab="Age", ylab="Salary", col=4)
+cor(df$Salary, df$Age)
+```
+
+Salary and age are weakly, positively correlated.
+
+## Expense vs Age
+```{r}
+ggplot(df, aes(x=Expense, y=Age)) + geom_point() + stat_smooth(method = "lm", se= FALSE, size = 1) + labs(title = "Expense vs Age")
+boxplot(Expense~Age,data=df, main="Expense Data by Age", xlab="Age", ylab="Expense", col=5)
+```
+
+This boxplot looks very similar to the boxplot of salary by age, perhaps due to correlation between those variables.
+
+```{r}
+cor(df$Expense, df$Age)
+```
+
+Expense and age are not very strongly correlated. They have a somewhat weak, positive correlation
+
+## Scatterplot Matrix of Age, Salary, and Expense
+```{r}
+plot(df[3:5], col="darkslategray2", main = "Scatterplot Matrix of Data", pch=19)
+```
+
+It's clear from the scatterplot matrix that expense and salary are very closely correlated, while age is not very strongly correlated with either salary or expense

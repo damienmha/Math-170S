@@ -1,0 +1,67 @@
+---
+title: "Math 170S Homework #1"
+author: "Damien Ha"
+date: "2023-01-20"
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+# Problem 1
+```{r}
+mean(c(245, 223, 265, 201, 229, 221, 278, 299,289,281,277, 275, 274, 221,221,234, 225, 228,231,236,239,240,243,256,247,255,257, 266,278,269,260,276))
+var(c(245, 223, 265, 201, 229, 221, 278, 299,289,281,277, 275, 274, 221,221,234, 225, 228,231,236,239,240,243,256,247,255,257, 266,278,269,260,276))
+sd(c(245, 223, 265, 201, 229, 221, 278, 299,289,281,277, 275, 274, 221,221,234, 225, 228,231,236,239,240,243,256,247,255,257, 266,278,269,260,276))
+median(c(245, 223, 265, 201, 229, 221, 278, 299,289,281,277, 275, 274, 221,221,234, 225, 228,231,236,239,240,243,256,247,255,257, 266,278,269,260,276))
+IQR(c(245, 223, 265, 201, 229, 221, 278, 299,289,281,277, 275, 274, 221,221,234, 225, 228,231,236,239,240,243,256,247,255,257, 266,278,269,260,276))
+```
+So the mean is 251.2188, the variance is 592.9506, the standard deviation is 24.35058, the median is 251, and the interquartile range is 43.75
+
+# Problem 2
+```{r}
+Class <- c('0-9', '10-19', '20-29', '30-39', '40-49', '50-59')
+Frequency <- c(8, 5, 7, 11, 9, 6)
+MidPoint <- c(4.5, 14.5, 24.5, 34.5, 44.5, 54.5)
+xf <- Frequency * MidPoint
+cf <- c(8, 13, 20, 31, 40, 46)
+df <- data.frame(Class, Frequency, MidPoint, xf, cf)
+df
+mean1 <- ((sum(xf)) / 46)
+mean1
+variance1 <- (sum(Frequency * ((MidPoint - mean1)^2))) / 46
+variance1
+sd1 <- sqrt(variance1)
+sd1
+median1 <- 30 + (3/11)*(9)
+median1
+q1 <- 14.5 + (3.5/5)*9
+q3 <- 44.5 + (3.5/9)*9
+iqr1 <- q3 - q1
+iqr1
+```
+So the mean is 30.15217, the variance is 268.0529, the standard deviation is 16.37232, the median is 32.45455, and the interquartile range is 27.2
+
+# Problem 3
+```{r}
+Class2 <- c('30-34', '35-39', '40-44', '45-49', '50-54', '55-59', '60-64')
+Frequency2 <- c(12, 15, 10, 9, 11, 13, 8)
+MidPoint2 <- c(32, 37, 42, 47, 52, 57, 62)
+xf2 <- Frequency2 * MidPoint2
+cf2 <- c(12, 27, 37, 46, 57, 70, 78)
+df2 <- data.frame(Class2, Frequency2, MidPoint2, xf2, cf2)
+df2
+mean2 <- ((sum(xf2)) / 78)
+mean2
+variance2 <- (sum(Frequency2 * ((MidPoint2 - mean2)^2))) / 78
+variance2
+sd2 <- sqrt(variance2)
+sd2
+median2 <- 45+(2/9)*(4)
+median2
+q1_2 <- 37 + (7.5/15)*4
+q3_2 <- 57 + (1.5/13)*4
+iqr2 <- q3_2 - q1_2
+iqr2
+```
+So the mean is 46.03846, the variance is 99.39596, the standard deviation is 9.969752, the median is 45.88889, and the interquartile range is 18.46154
