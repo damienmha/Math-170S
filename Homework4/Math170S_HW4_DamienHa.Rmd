@@ -1,0 +1,77 @@
+---
+title: 'Math 170S Homework #4'
+author: "Damien Ha"
+date: "2023-02-08"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 3
+---
+
+# Read in Data
+```{r}
+data(mtcars)
+```
+
+
+# Problem 1
+## mpg
+```{r}
+summary(mtcars$mpg)
+```
+
+## cyl
+```{r}
+summary(mtcars$cyl)
+```
+
+## disp
+```{r}
+summary(mtcars$disp)
+```
+
+## hp
+```{r}
+summary(mtcars$hp)
+```
+
+## drat
+```{r}
+summary(mtcars$drat)
+```
+
+## wt
+```{r}
+summary(mtcars$wt)
+```
+
+
+# Problem 2
+```{r}
+boxplot(mtcars$mpg[which(mtcars$am == 0)], mtcars$mpg[which(mtcars$am == 1)],  
+        main = "Boxplot of mpg", col = c("red", "blue"), names = c("automatic","manual"))
+```
+
+
+
+# Problem 3
+```{r}
+plot(mtcars$mpg, mtcars$cyl, xlab = "mpg", ylab = "cyl", main = "mpg vs cyl",  
+     col = "dodgerblue", pch=19)
+```
+
+
+
+# Problem 4
+```{r}
+cor(mtcars$mpg, mtcars$cyl)
+```
+
+
+
+# Problem 5
+```{r}
+summary(lm(mtcars$mpg ~ mtcars$disp))
+```
+
+
